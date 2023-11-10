@@ -40,7 +40,7 @@
             <h1 class="text-6xl font-bold text-primary">EDIT PROFILE</h1>
         </div>
 
-        <div class="max-w-md mx-auto p-6 bg-white shadow-lg rounded-md shadow-md">
+        <div class="id_card max-w-md mx-auto p-6 bg-white shadow-lg rounded-md shadow-md">
             <div class="mb-6">
                 <p class="text-lg font-bold mb-2 text-primary">Logged in Duck:</p>
                 <p class="mb-2"><strong>Duckname: </strong> {{ app.user.duckname }}</p>
@@ -49,7 +49,7 @@
             </div>
 
             <div class="flex justify-end">
-                <a href="{{ path('app_quack_index') }}" class="btn btn-secondary">MAKE THIS SAVE BTN WORK!!</a>
+                <a href="{{ path('app_profile') }}" class="btn btn-secondary">Cancel Edit</a>
             </div>
         </div>
     </div>

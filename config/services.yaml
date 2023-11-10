@@ -20,9 +20,7 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
         # Added this for edit profile
-    App\Entity\User:
-        # this class has been defined in your app/src/Entity/User.php file
-        arguments: [ ]
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -19,7 +19,13 @@ html, body {
   /* you can adjust this width according to your preference */
 }
 
-.butonnnns {
-  margin-left: auto;
-  margin-right: auto;
+.color-box {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  display: inline-block;
+}
+
+.id_card{
+  min-width: 400px;
 }
