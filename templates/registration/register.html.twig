@@ -1,0 +1,85 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}Register{% endblock %}#}
+
+{#{% block body %}#}
+{#    <h1>Register</h1>#}
+{#    {{ form_start(registrationForm) }}#}
+
+{#    {{ form_errors(registrationForm) }}#}
+
+{#    {{ form_row(registrationForm.firstname) }}#}
+{#    {{ form_row(registrationForm.lastname) }}#}
+{#    {{ form_row(registrationForm.email) }}#}
+{#        {{ form_row(registrationForm.duckname) }}#}
+{#        {{ form_row(registrationForm.plainPassword, {#}
+{#            label: 'Password', placeholder: 'yolo'#}
+{#        }) }}#}
+{#        {{ form_row(registrationForm.agreeTerms) }}#}
+
+{#        <button type="submit" class="btn">Register</button>#}
+{#    {{ form_end(registrationForm) }}#}
+{#{% endblock %}#}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+    <div class="flex flex-col items-center justify-center h-screen">
+        <div class="mb-8">
+            <h1 class="text-8xl font-bold mt-20">REGISTER</h1>
+        </div>
+
+        <div class="max-w-md mx-auto p-6 bg-primary rounded-md shadow-md">
+            {{ form_start(registrationForm) }}
+
+            {{ form_errors(registrationForm) }}
+
+            <div class="mb-4">
+                {{ form_row(registrationForm.firstname, {
+                    'label': 'First name',
+                    'attr': {'class': 'border rounded-md py-2 px-3 w-full bg-base-200'}
+                }) }}
+            </div>
+
+            <div class="mb-4">
+                {{ form_row(registrationForm.lastname, {
+                    'label': 'Last name',
+                    'attr': {'class': 'border rounded-md py-2 px-3 w-full bg-base-200'}
+                }) }}
+            </div>
+
+            <div class="mb-4">
+                {{ form_row(registrationForm.email, {
+                    'label': 'Email',
+                    'attr': {'class': 'border rounded-md py-2 px-3 w-full bg-base-200'}
+                }) }}
+            </div>
+
+            <div class="mb-4">
+                {{ form_row(registrationForm.duckname, {
+                    'label': 'Duck name',
+                    'attr': {'class': 'border rounded-md py-2 px-3 w-full bg-base-200'}
+                }) }}
+            </div>
+
+            <div class="mb-4">
+                {{ form_row(registrationForm.plainPassword, {
+                    'label': 'Password',
+                    'attr': {'class': 'border rounded-md py-2 px-3 w-full bg-base-200', 'placeholder': 'Psst something hard to crack!'}
+                }) }}
+            </div>
+
+            <div class="mb-4">
+                {{ form_row(registrationForm.agreeTerms, { 'label': 'I agree to the terms ', 'attr': {'class': 'form-check-input'} }) }}
+            </div>
+
+            <button type="submit" class="bg-secondary text-white py-2 px-4 rounded-md">Register</button>
+
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+
+{% endblock %}

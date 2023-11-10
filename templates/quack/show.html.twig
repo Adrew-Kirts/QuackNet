@@ -1,3 +1,5 @@
+
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Quack{% endblock %}
@@ -5,13 +7,14 @@
 {% block body %}
     <h1>Quack</h1>
 
+<div class="table w-96 bg-primary my-table">
     <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ quack.id }}</td>
             </tr>
-            <tr>
+            <tr class="hover">
                 <th>Content</th>
                 <td>{{ quack.content }}</td>
             </tr>
@@ -21,10 +24,33 @@
             </tr>
         </tbody>
     </table>
+</div>
 
-    <a href="{{ path('app_quack_index') }}">back to list</a>
+<div class="flex justify-center btn-group btn-group-horizontal">
+    <a href="{{ path('app_quack_index') }}" class="btn btn-secondary">Back to List</a>
 
-    <a href="{{ path('app_quack_edit', {'id': quack.id}) }}">edit</a>
+    <a href="{{ path('app_quack_edit', {'id': quack.id}) }}" class="btn btn-primary">Edit</a>
 
     {{ include('quack/_delete_form.html.twig') }}
+</div>
+
+    <div class="color-box bg-primary"></div>
+    <div class="color-box bg-secondary"></div>
+    <div class="color-box bg-accent"></div>
+    <div class="color-box bg-neutral"></div>
+    <div class="color-box bg-base-200"></div>
+    <div class="color-box bg-info"></div>
+
+    <p>Logged in Duck:</p>
+    <p>Duckname : {{ app.user.duckname }}</p>
+    <p>First name : {{ app.user.firstname }}</p>
+    <p>E-mail : {{ app.user.email }}</p>
+
+
+
 {% endblock %}
+
+
+
+
+

@@ -14,7 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/quack')]
 class QuackController extends AbstractController
 {
-    #[Route('/', name: 'app_quack_index', methods: ['GET'])]
+    #[Route('/landing', name: 'app_quack_landing', methods: ['GET'])]
+    public function landing(QuackRepository $quackRepository): Response
+    {
+        return $this->render('quack/landing.html.twig', [
+        ]);
+    }
+
+    #[Route('/index', name: 'app_quack_index', methods: ['GET'])]
     public function index(QuackRepository $quackRepository): Response
     {
         return $this->render('quack/index.html.twig', [
