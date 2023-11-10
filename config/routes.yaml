@@ -7,7 +7,3 @@ controllers:
 landing_page:
     path: /
     controller: App\Controller\QuackController::landing
-
-#quack_net_index:
-#    path: /quack_net
-#    controller: App\Controller\QuackController::index

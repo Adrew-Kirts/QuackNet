@@ -8,7 +8,7 @@
 
 <div class="flex flex-col items-center justify-center h-screen pt-10">
     <div class="mb-8">
-        <h1 class="text-8xl font-bold mt-20">IDENTIFY YOURSELF DUCK!</h1>
+        <h1 class="text-8xl font-bold mt-20 text-primary">IDENTIFY YOURSELF DUCK!</h1>
     </div>
 
     <div class="flex items-center justify-center h-screen">
@@ -32,10 +32,19 @@
                 {# If you want to control the URL the user is redirected to on success
                 <input type="hidden" name="_target_path" value="/account"> #}
 
-                <button type="submit" class="bg-secondary text-white py-2 px-4 rounded-md">Login</button>
+                <div class="flex justify-center">
+                    <div class="w-1/2 float-left">
+                        <button type="submit" class="text-white py-2 px-4 rounded-md">Login</button>
+                    </div>
+                    <div class="w-1/2 float-right">
+                        <button type="button" class="text-white py-2 px-4 rounded-md" onclick="window.location.href='{{ path('app_register') }}'">or Register</button>
+                    </div>
+                </div>
+
+
+
             </form>
         </div>
     </div>
 
 {% endblock %}
-

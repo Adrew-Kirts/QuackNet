@@ -1,0 +1,59 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}Hello ProfileController!{% endblock %}#}
+
+{#{% block body %}#}
+
+{#<div class="flex flex-col items-center justify-center h-screen pt-10">#}
+{#    <div class="mb-8">#}
+{#        <h1 class="text-8xl font-bold mt-20">PROFILE</h1>#}
+{#    </div>#}
+
+{#    <div class="flex items-center justify-center h-screen">#}
+
+{#        <p>Logged in Duck: </p>#}
+{#        <p>Duckname : {{ app.user.duckname }}</p>#}
+{#        <p>First name : {{ app.user.firstname }}</p>#}
+{#        <p>E-mail : {{ app.user.email }}</p>#}
+
+
+{#                    <div class="w-1/2 float-right">#}
+{#                        <button type="button" class="text-white py-2 px-4 rounded-md" onclick="window.location.href='{{ path('app_quack_index') }}'">Quacks</button>#}
+{#                    </div>#}
+{#                </div>#}
+
+
+{#        </div>#}
+{#    </div>#}
+
+
+{#{% endblock %}#}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block body %}
+
+    <div class="flex flex-col items-center justify-center h-screen pt-10">
+        <div class="mb-8">
+            <h1 class="text-6xl font-bold text-primary">EDIT PROFILE</h1>
+        </div>
+
+        <div class="max-w-md mx-auto p-6 bg-white shadow-lg rounded-md shadow-md">
+            <div class="mb-6">
+                <p class="text-lg font-bold mb-2 text-primary">Logged in Duck:</p>
+                <p class="mb-2"><strong>Duckname: </strong> {{ app.user.duckname }}</p>
+                <p class="mb-2"><strong>First name: </strong> {{ app.user.firstname }}</p>
+                <p class="mb-4"><strong>E-mail: </strong> {{ app.user.email }}</p>
+            </div>
+
+            <div class="flex justify-end">
+                <a href="{{ path('app_quack_index') }}" class="btn btn-secondary">MAKE THIS SAVE BTN WORK!!</a>
+            </div>
+        </div>
+    </div>
+
+    {{ include('quack/_form.html.twig', {'button_label': 'Update'}) }}
+
+{% endblock %}
