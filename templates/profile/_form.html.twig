@@ -1,0 +1,55 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}EDIT PROFILE{% endblock %}
+
+{% block body %}
+
+    <div class="flex flex-col items-center justify-center h-screen">
+        <div class="mb-8">
+            <h1 class="text-8xl font-bold mt-20 text-primary">EDIT PROFILE</h1>
+        </div>
+
+        <div class="max-w-md mx-auto p-6 bg-primary rounded-md shadow-md">
+            {{ form_start(form) }}
+
+            <div class="mb-4">
+                <p>Duckname</p>
+                {{ form_widget(form.duckname, {
+                    'label': 'Duck name',
+                    'attr': {'class': 'border rounded-md py-2 px-3 w-full bg-base-200'}
+                }) }}
+            </div>
+
+            <div class="mb-4">
+                <p>First name</p>
+                {{ form_widget(form.firstname, {
+                    'label': 'First name',
+                    'attr': {'class': 'border rounded-md py-2 px-3 w-full bg-base-200'}
+                }) }}
+            </div>
+
+            <div class="mb-4">
+                <p>Last name</p>
+                {{ form_widget(form.lastname, {
+                    'label': 'Last name',
+                    'attr': {'class': 'border rounded-md py-2 px-3 w-full bg-base-200'}
+                }) }}
+            </div>
+
+            <div class="mb-4">
+                <p>Email</p>
+                {{ form_widget(form.email, {
+                    'label': 'Email',
+                    'attr': {'class': 'border rounded-md py-2 px-3 w-full bg-base-200'}
+                }) }}
+
+            </div>
+            <button type="submit" class="bg-secondary text-white py-2 px-4 rounded-md">Save!</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+

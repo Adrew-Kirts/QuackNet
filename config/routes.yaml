@@ -7,3 +7,7 @@ controllers:
 landing_page:
     path: /
     controller: App\Controller\QuackController::landing
+
+app_logout:
+    path: /logout
+    methods: GET

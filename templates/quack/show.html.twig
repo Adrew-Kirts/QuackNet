@@ -28,8 +28,9 @@
 
 <div class="flex justify-center btn-group btn-group-horizontal">
     <a href="{{ path('app_quack_index') }}" class="btn btn-secondary">Back to List</a>
-
+    {% if quack.user.id is same as (app.user.id) %}
     <a href="{{ path('app_quack_edit', {'id': quack.id}) }}" class="btn btn-primary">Edit</a>
+    {% endif %}
 
     {{ include('quack/_delete_form.html.twig') }}
 </div>

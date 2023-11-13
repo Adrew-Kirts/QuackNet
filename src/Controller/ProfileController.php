@@ -21,14 +21,6 @@ class ProfileController extends AbstractController
             'controller_name' => 'ProfileController',
         ]);
     }
-//
-//    #[Route('/profile_edit', name: 'app_profile_edit')]
-//    public function indexEdit(): Response
-//    {
-//        return $this->render('profile/edit.html.twig', [
-//            'controller_name' => 'ProfileController',
-//        ]);
-//    }
 
 
     #[Route('/profile/edit', name: 'app_profile_edit', methods: ['GET', 'POST'])]
@@ -39,12 +31,21 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('password')->getData()
-                )
-            );
+//            $user->setPassword(
+//                $userPasswordHasher->hashPassword(
+//                    $user,
+//                    $form->get('password')->getData()
+//                )
+//            );
+            // Check if the 'Change Password' checkbox was checked
+            if ($form->get('change_password')->getData()) {
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('password')->getData()
+                    )
+                );
+            }
 
             $entityManager->flush();
 

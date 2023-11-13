@@ -32,7 +32,10 @@ class QuackController extends AbstractController
     #[Route('/new', name: 'app_quack_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $quack = new Quack();
+        $user = $this->getUser();
+        $quack->setUser($user);
         $form = $this->createForm(QuackType::class, $quack);
         $form->handleRequest($request);
 
@@ -52,6 +55,7 @@ class QuackController extends AbstractController
     #[Route('/{id}', name: 'app_quack_show', methods: ['GET'])]
     public function show(Quack $quack): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('quack/show.html.twig', [
             'quack' => $quack,
         ]);
@@ -60,25 +64,31 @@ class QuackController extends AbstractController
     #[Route('/{id}/edit', name: 'app_quack_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Quack $quack, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(QuackType::class, $quack);
-        $form->handleRequest($request);
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        if ($this->getUser() === $quack->getUser()) {
+            $form = $this->createForm(QuackType::class, $quack);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->flush();
 
-            return $this->redirectToRoute('app_quack_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_quack_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->render('quack/edit.html.twig', [
+                'quack' => $quack,
+                'form' => $form,
+            ]);
         }
+        return $this->redirectToRoute('app_quack_index');
 
-        return $this->render('quack/edit.html.twig', [
-            'quack' => $quack,
-            'form' => $form,
-        ]);
     }
 
     #[Route('/{id}', name: 'app_quack_delete', methods: ['POST'])]
     public function delete(Request $request, Quack $quack, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$quack->getId(), $request->request->get('_token'))) {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        if ($this->isCsrfTokenValid('delete' . $quack->getId(), $request->request->get('_token'))) {
             $entityManager->remove($quack);
             $entityManager->flush();
         }

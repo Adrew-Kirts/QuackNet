@@ -43,6 +43,13 @@ class UserType extends AbstractType
                 'first_options' => ['label' => 'New Password'],
                 'second_options' => ['label' => 'Repeat New Password'],
             ]);
+
+        //ADDED CHECKBOX
+             $builder->add('change_password', CheckboxType::class, [
+                 'label'    => 'Change password?',
+                 'required' => false,
+                 'mapped'   => false, // This field is not mapped to the User entity
+             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

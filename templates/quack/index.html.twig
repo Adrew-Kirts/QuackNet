@@ -3,35 +3,40 @@
 {% block title %}Quack index{% endblock %}
 
 {% block body %}
-    <h1>Quack index</h1>
+    <h1 class="text-4xl font-bold mb-8">Quack index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Content</th>
-                <th>Created_at</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for quack in quacks %}
-            <tr>
-                <td>{{ quack.id }}</td>
-                <td>{{ quack.content }}</td>
-                <td>{{ quack.createdAt ? quack.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_quack_show', {'id': quack.id}) }}">show</a>
-                    <a href="{{ path('app_quack_edit', {'id': quack.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if quacks is not empty %}
+        <ul class="list-none p-0">
+            {% for quack in quacks %}
+                <li class="mb-8">
+                    <a href="{{ path('app_quack_show', {'id': quack.id}) }}" class="card-link">
+                        <div class="bg-white rounded-md p-6 shadow-md hover:shadow-lg transition duration-300" style="max-width: 400px; margin: 0 auto;">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="text-lg font-bold">{{ quack.user.duckname }}</p>
+                                <p class="text-gray-500 text-sm">{{ quack.createdAt ? quack.createdAt|date('d-m-Y H:i') : '' }}</p>
+                            </div>
 
-    <a href="{{ path('app_quack_new') }}">Create new</a>
+                            <div class="bg-primary p-4 rounded-md mb-4">
+                                <p class="text-white">{{ quack.content }}</p>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-blue-500">Show</span>
+
+                                {% if quack.user.id is same as (app.user.id) %}
+                                    <a href="{{ path('app_quack_edit', {'id': quack.id}) }}" class="text-yellow-500">Edit</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-gray-500 text-lg">No records found.</p>
+    {% endif %}
+
+    <div class="mt-8">
+        <a href="{{ path('app_quack_new') }}" class="btn btn-accent">Create</a>
+    </div>
 {% endblock %}

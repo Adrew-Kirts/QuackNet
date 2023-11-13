@@ -1,43 +1,12 @@
-{#{% extends 'base.html.twig' %}#}
-
-{#{% block title %}Hello ProfileController!{% endblock %}#}
-
-{#{% block body %}#}
-
-{#<div class="flex flex-col items-center justify-center h-screen pt-10">#}
-{#    <div class="mb-8">#}
-{#        <h1 class="text-8xl font-bold mt-20">PROFILE</h1>#}
-{#    </div>#}
-
-{#    <div class="flex items-center justify-center h-screen">#}
-
-{#        <p>Logged in Duck: </p>#}
-{#        <p>Duckname : {{ app.user.duckname }}</p>#}
-{#        <p>First name : {{ app.user.firstname }}</p>#}
-{#        <p>E-mail : {{ app.user.email }}</p>#}
-
-
-{#                    <div class="w-1/2 float-right">#}
-{#                        <button type="button" class="text-white py-2 px-4 rounded-md" onclick="window.location.href='{{ path('app_quack_index') }}'">Quacks</button>#}
-{#                    </div>#}
-{#                </div>#}
-
-
-{#        </div>#}
-{#    </div>#}
-
-
-{#{% endblock %}#}
-
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Profile{% endblock %}
+{% block title %}Profile{% endblock %}
 
 {% block body %}
 
     <div class="flex flex-col items-center justify-center h-screen pt-10">
         <div class="mb-8">
-            <h1 class="text-6xl font-bold text-primary">EDIT PROFILE</h1>
+            <h1 class="text-6xl font-bold text-primary">PROFILE</h1>
         </div>
 
         <div class="id_card max-w-md mx-auto p-6 bg-white shadow-lg rounded-md shadow-md">
@@ -54,6 +23,6 @@
         </div>
     </div>
 
-    {{ include('quack/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('profile/_form.html.twig', {'button_label': 'Update'}) }}
 
 {% endblock %}

@@ -6,6 +6,7 @@ use App\Repository\QuackRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: QuackRepository::class)]
 class Quack
 {
@@ -19,6 +20,23 @@ class Quack
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    private ?string $tag = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    private ?User $user = null;
+
+    public function getTag(): string
+    {
+        return $this->tag;
+    }
+//usage: $quack->setTag(['tag1', 'tag2'])
+    public function setTag(): ?array
+    {
+        return null;
+    }
 
     public function getId(): ?int
     {
@@ -48,4 +66,17 @@ class Quack
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
 }
