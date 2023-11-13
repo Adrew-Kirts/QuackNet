@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Quack;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,6 +16,10 @@ class QuackType extends AbstractType
         $builder
             ->add('content')
             ->add('created_at')
+//            ->add('tag', TextType::class, [
+//                'required' => false,
+//                'label' => 'Tags (comma-separated)',
+//            ])
 
 //            ->add('user', EntityType::class, [
 //                'class' => 'App\Entity\User', // Update this to the actual namespace of your User entity

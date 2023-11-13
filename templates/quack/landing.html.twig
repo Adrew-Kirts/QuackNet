@@ -21,12 +21,19 @@
 
         <img src="{{ asset('images/quackLogo.webp') }}" alt="quack_logo">
 
-        <h1>Hello mofo ✅</h1>
-
-        <a href="{{ path('app_login') }}" class="btn btn-primary">Login</a>
+        {% if not app.user %}
+            <a href="{{ path('app_login') }}" class="btn btn-primary">Login</a>
+        {% endif %}
+        {% if not app.user %}
+        <a href="{{ path('app_profile') }}" class="btn btn-accent">Profile</a>
+        {% endif %}
+        {% if not app.user %}
         <a href="{{ path('app_register') }}" class="btn btn-base">Register</a>
+        {% endif %}
         <a href="{{ path('app_quack_index') }}" class="btn btn-accent">Quacks</a>
+        {% if app.user %}
         <a href="{{ path('app_logout') }}" class="btn btn-primary">Logout</a>
+        {% endif %}
 
     </div>
 {% endblock %}
