@@ -28,6 +28,23 @@ class Quack
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?User $user = null;
 
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $imageName = null;
+
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): self
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+
     public function __construct()
     {
         $this->created_at = new \DateTime();

@@ -19,6 +19,11 @@
 
                             <div class="bg-primary p-4 rounded-md">
                                 <p class="text-white italic">🦆 {{ quack.content }}</p>
+
+                                {% if quack.imageName %}
+                                    <img src="{{ asset('uploads/quack_images/' ~ quack.imageName) }}" alt="Quack Image" style="max-width: 100px;" />
+                                {% endif %}
+
                             </div>
 
                             {% if quack.tag %}
@@ -37,7 +42,8 @@
         <p class="text-gray-500 text-lg">No records found.</p>
     {% endif %}
 
-    <div class="mt-8">
-        <a href="{{ path('app_quack_new') }}" class="btn btn-accent">Create</a>
+    <div class="fixed top-4 right-6 z-50 flex items-center space-x-4">
+        <a href="{{ path('app_quack_new') }}" class="btn btn-accent">New Quack</a>
+        <a href="{{ path('app_profile') }}" class="btn btn-primary">Profile</a>
     </div>
 {% endblock %}
