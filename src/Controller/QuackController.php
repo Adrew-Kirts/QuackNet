@@ -36,17 +36,12 @@ class QuackController extends AbstractController
         $quack = new Quack();
         $user = $this->getUser();
         $quack->setUser($user);
-
         $form = $this->createForm(QuackType::class, $quack);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Convert the tags from a comma-separated string to an array
-//            $tags = $form->get('tag')->getData();
-//            if (is_string($tags)) {
-//                $tags = array_map('trim', explode(',', $tags));
-//            }
-//            $quack->setTag($tags);
+            $tags = $form->get('tag')->getData();
+            $quack->setTag($tags);
 
             $entityManager->persist($quack);
             $entityManager->flush();
@@ -58,12 +53,6 @@ class QuackController extends AbstractController
             'quack' => $quack,
             'form' => $form,
         ]);
-    }
-
-    private function convertTagsToArray(?string $tags): ?array
-    {
-        // Convert comma-separated string to an array
-        return $tags !== null ? array_map('trim', explode(',', $tags)) : null;
     }
 
     #[Route('/{id}', name: 'app_quack_show', methods: ['GET'])]
@@ -84,6 +73,10 @@ class QuackController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+
+                $tags = $form->get('tag')->getData();
+                $quack->setTag($tags);
+
                 $entityManager->flush();
 
                 return $this->redirectToRoute('app_quack_index', [], Response::HTTP_SEE_OTHER);

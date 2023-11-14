@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Quack;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,17 +15,10 @@ class QuackType extends AbstractType
         $builder
             ->add('content')
             ->add('created_at')
-//            ->add('tag', TextType::class, [
-//                'required' => false,
-//                'label' => 'Tags (comma-separated)',
-//            ])
-
-//            ->add('user', EntityType::class, [
-//                'class' => 'App\Entity\User', // Update this to the actual namespace of your User entity
-//                'choice_label' => 'duckname', // Update this to the property you want to display in the dropdown
-////                'placeholder' => 'Choose a user', // Optional, adds an empty option to the dropdown
-//            ])
-        ;
+            ->add('tag', TextType::class, [
+                'required' => false,
+                'label' => 'Tags (comma-separated e.g. duck, pond)',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

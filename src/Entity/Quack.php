@@ -21,8 +21,8 @@ class Quack
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
 
-//    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
-//    private ?array $tag = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $tag = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
@@ -33,17 +33,17 @@ class Quack
         $this->created_at = new \DateTime();
     }
 
-//    public function getTag(): ?array
-//    {
-//        return $this->tag;
-//    }
-//
-//    public function setTag(?array $tag): static
-//    {
-//        $this->tag = $tag;
-//
-//        return $this;
-//    }
+    public function getTag(): ?string
+    {
+        return $this->tag;
+    }
+
+    public function setTag(?string $tag): self
+    {
+        $this->tag = $tag;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
