@@ -15,34 +15,20 @@ class QuackType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('content')
-            ->add('created_at')
-
-//            ->add('image', FileType::class, [
-//                'label' => 'Quack Image (PNG, JPG)',
-//                'mapped' => false,
-//                'required' => false,
-//                'constraints' => [
-//                    new File([
-//                        'maxSize' => '1024k',
-//                        'mimeTypes' => [
-//                            'image/png',
-//                            'image/jpeg',
-//                        ],
-//                        'mimeTypesMessage' => 'Please upload a valid PNG or JPG image',
-//                    ])
-//                ],
-//            ])
-
+            ->add('content', TextType::class, [
+            'label' => 'Your Quack',
+                'required' => false,
+            ])
+//            ->add('created_at')
             ->add('imageFile', FileType::class, [
-                'label' => 'Image (PNG, JPEG file)',
+                'label' => 'Image: (PNG, JPEG file)',
                 'required' => false,
                 'mapped' => false, // because this is not mapped to a database column
             ])
 
             ->add('tag', TextType::class, [
                 'required' => false,
-                'label' => 'Tags (comma-separated e.g. duck, pond)',
+                'label' => 'Tags: (comma-separated e.g. duck, pond)',
             ]);
     }
 

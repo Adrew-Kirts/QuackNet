@@ -17,7 +17,9 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/quack')]
 class QuackController extends AbstractController
 {
-    public function __construct(private SluggerInterface $slugger) {}
+    public function __construct(private SluggerInterface $slugger)
+    {
+    }
 
     #[Route('/landing', name: 'app_quack_landing', methods: ['GET'])]
     public function landing(QuackRepository $quackRepository): Response
@@ -30,7 +32,16 @@ class QuackController extends AbstractController
     public function index(QuackRepository $quackRepository): Response
     {
         return $this->render('quack/index.html.twig', [
-            'quacks' => $quackRepository->findAll(),
+            'quacks' => $quackRepository->findByOrdered(),
+        ]);
+    }
+
+    #[Route('/personalIndex', name: 'app_quack_personalIndex', methods: ['GET'])]
+    public function personalIndex(QuackRepository $quackRepository): Response
+    {
+        $user = $this->getUser();
+        return $this->render('quack/personalIndex.html.twig', [
+            'quacks' => $quackRepository->findByUser($user),
         ]);
     }
 
@@ -51,7 +62,7 @@ class QuackController extends AbstractController
             if ($imageFile) {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $this->slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
 
                 try {
                     $imageFile->move(
@@ -98,6 +109,25 @@ class QuackController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                /** @var UploadedFile $imageFile */
+                $imageFile = $form->get('imageFile')->getData();
+
+                if ($imageFile) {
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $this->slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('quack_images_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                    }
+
+                    $quack->setImageName($newFilename);
+                }
 
                 $tags = $form->get('tag')->getData();
                 $quack->setTag($tags);

@@ -11,15 +11,27 @@
 
         <div class="max-w-md mx-auto p-6 bg-white shadow-lg rounded-md shadow-md">
             <div class="mb-6">
-                <p class="text-lg font-bold mb-2 text-primary">Logged in Duck:</p>
-                <p class="mb-2"><strong>Duckname:</strong> {{ app.user.duckname }}</p>
-                <p class="mb-2"><strong>First name:</strong> {{ app.user.firstname }}</p>
-                <p class="mb-4"><strong>E-mail:</strong> {{ app.user.email }}</p>
+                <p class="text-lg font-bold mb-2 text-primary text-center">Logged in Duck:</p>
+                <p class="mb-1 mt-2"><strong>Duckname:</strong></p>
+                {{ app.user.duckname }}
+                <p class="mb-1 mt-2"><strong>First name:</strong></p>
+                {{ app.user.firstname }}
+                <p class="mb-1 mt-2"><strong>Last name:</strong></p>
+                {{ app.user.lastname }}
+                <p class="mb-1 mt-2"><strong>E-mail:</strong></p>
+                {{ app.user.email }}
             </div>
 
-            <div class="flex justify-end">
+            <div class="flex items-center space-x-4">
                 <a href="{{ path('app_profile_edit') }}" class="btn btn-secondary">Edit Profile</a>
-                <a href="{{ path('app_quack_index') }}" class="btn btn-secondary">All Quacks</a>
+                <a href="{{ path('app_quack_personalIndex') }}" class="btn btn-secondary">My Quacks</a>
+                <a href="{{ path('app_profile_password') }}" class="btn btn-secondary">Change PW</a>
+            </div>
+
+            <div class="fixed top-4 right-6 z-50 flex items-center space-x-4">
+                <a href="{{ path('app_quack_index') }}" class="btn btn-primary">Quacks Feed</a>
+                <a href="{{ path('app_quack_new') }}" class="btn btn-accent">New Quack</a>
+                <a href="{{ path('app_logout') }}" class="btn btn-primary">Logout</a>
             </div>
         </div>
     </div>

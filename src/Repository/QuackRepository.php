@@ -21,20 +21,28 @@ class QuackRepository extends ServiceEntityRepository
         parent::__construct($registry, Quack::class);
     }
 
-//    /**
-//     * @return Quack[] Returns an array of Quack objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('q.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Quack[] Returns an array of Quack objects
+     */
+    public function findByUser($user): array
+    {
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('q.id', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByOrdered(): array
+    {
+        return $this->createQueryBuilder('q')
+            ->orderBy('q.id', 'DESC')
+            ->setMaxResults(100)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?Quack
 //    {

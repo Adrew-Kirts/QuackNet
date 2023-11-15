@@ -34,29 +34,13 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Email',
 
-            ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
-                'options' => ['attr' => ['class' => 'password-field']],
-                'required' => true,
-                'first_options' => ['label' => 'New Password'],
-                'second_options' => ['label' => 'Repeat New Password'],
             ]);
-
-        //ADDED CHECKBOX
-             $builder->add('change_password', CheckboxType::class, [
-                 'label'    => 'Change password?',
-                 'required' => false,
-                 'mapped'   => false, // This field is not mapped to the User entity
-             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'user' => null,
         ]);
     }
 }

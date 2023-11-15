@@ -18,10 +18,17 @@
                 <div class="mb-4 text-red-500">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
 
-            <form action="{{ path('app_login') }}" method="post">
+{#            <form action="{{ path('app_login') }}" method="post">#}
+                <form action="{{ path('app_login') }}" method="post">
+
                 <div class="mb-4">
-                    <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Duck name:</label>
-                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="border rounded-md py-2 px-3 w-full">
+{#                    <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Duck name:</label>#}
+                    <label for="inputUsernameOrEmail" class="block text-gray-700 text-sm font-bold mb-2">Duck name:</label>
+
+
+                    {#                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="border rounded-md py-2 px-3 w-full">#}
+                    <input type="text" id="inputUsernameOrEmail" name="_username_or_email" placeholder="Username or Email" required>
+
                 </div>
 
                 <div class="mb-4">

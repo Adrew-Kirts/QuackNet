@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Quack index{% endblock %}
+{% block title %}Personal Quack index{% endblock %}
 
 {% block body %}
+
     <div class="mb-8">
-        <h1 class="text-6xl font-bold text-primary">QUACK FEED</h1>
+        <h1 class="text-6xl font-bold text-primary">MY QUACKS</h1>
     </div>
 
     {% if quacks is not empty %}
@@ -23,7 +24,8 @@
                                 <p class="text-white italic">🦆 {{ quack.content }}</p>
 
                                 {% if quack.imageName %}
-                                    <img src="{{ asset('uploads/quack_images/' ~ quack.imageName) }}" alt="Quack Image" style="max-width: 100px;" />
+                                    <img src="{{ asset('uploads/quack_images/' ~ quack.imageName) }}" alt="Quack Image"
+                                         style="max-width: 100px;"/>
                                 {% endif %}
 
                             </div>
