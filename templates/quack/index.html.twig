@@ -23,9 +23,9 @@
                                 <p class="text-white italic">🦆 {{ quack.content }}</p>
 
                                 {% if quack.imageName %}
-                                    <img src="{{ asset('uploads/quack_images/' ~ quack.imageName) }}" alt="Quack Image" style="max-width: 100px;" />
+                                    <img src="{{ asset('uploads/quack_images/' ~ quack.imageName) }}" alt="Quack Image"
+                                         style="max-width: 100px;"/>
                                 {% endif %}
-
                             </div>
 
                             {% if quack.tag %}
@@ -35,6 +35,11 @@
                                     {% endfor %}
                                 </div>
                             {% endif %}
+
+                            <div class="">
+                                <span class="bg-secondary text-white rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-5">💬 {{ quack.quacks|length }}</span>
+                            </div>
+
                         </div>
                     </a>
                 </li>
@@ -45,7 +50,17 @@
     {% endif %}
 
     <div class="fixed top-4 right-6 z-50 flex items-center space-x-4">
-        <a href="{{ path('app_quack_new') }}" class="btn btn-accent">New Quack</a>
-        <a href="{{ path('app_profile') }}" class="btn btn-primary">Profile</a>
+        {% if app.user %}
+            <a href="{{ path('app_quack_new') }}" class="btn btn-accent">New Quack</a>
+            <a href="{{ path('app_profile') }}" class="btn btn-primary">Profile</a>
+        {% endif %}
+
+        {% if not app.user %}
+            <a href="{{ path('app_login') }}" class="btn btn-primary">Login</a>
+            <a href="{{ path('app_register') }}" class="btn btn-base">Register</a>
+        {% endif %}
+
     </div>
+
 {% endblock %}
+

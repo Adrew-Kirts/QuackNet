@@ -1,78 +1,3 @@
-
-
-{#{% extends 'base.html.twig' %}#}
-
-{#{% block title %}Quack{% endblock %}#}
-
-{#{% block body %}#}
-
-{#<div class="table w-96 bg-primary my-table">#}
-{#    <table class="table">#}
-{#        <tbody>#}
-{#            <tr>#}
-{#                <th>Id</th>#}
-{#                <td>{{ quack.id }}</td>#}
-{#            </tr>#}
-{#            <tr class="hover">#}
-{#                <th>Content</th>#}
-{#                <td>{{ quack.content }}</td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <th>Created_at</th>#}
-{#                <td>{{ quack.createdAt ? quack.createdAt|date('Y-m-d H:i:s') : '' }}</td>#}
-{#            </tr>#}
-{#        </tbody>#}
-{#    </table>#}
-{#</div>#}
-
-{#<div class="flex justify-center btn-group btn-group-horizontal">#}
-{#    <a href="{{ path('app_quack_index') }}" class="btn btn-secondary">Back to List</a>#}
-{#    {% if quack.user.id is same as (app.user.id) %}#}
-{#    <a href="{{ path('app_quack_edit', {'id': quack.id}) }}" class="btn btn-primary">Edit</a>#}
-{#    {% endif %}#}
-
-{#    {{ include('quack/_delete_form.html.twig') }}#}
-{#</div>#}
-
-{#{% endblock %}#}
-
-
-{#{% extends 'base.html.twig' %}#}
-
-{#{% block title %}Quack{% endblock %}#}
-
-{#{% block body %}#}
-{#    <div class="flex flex-col items-center justify-center min-h-screen bg-primary p-4">#}
-{#        <div class="w-full max-w-2xl bg-white rounded-lg shadow-md p-6">#}
-{#            <table class="table-auto w-full">#}
-{#                <tbody>#}
-{#                <tr class="border-b">#}
-{#                    <th class="px-4 py-2 text-left text-primary">Id</th>#}
-{#                    <td class="px-4 py-2">{{ quack.id }}</td>#}
-{#                </tr>#}
-{#                <tr class="border-b hover:bg-gray-100">#}
-{#                    <th class="px-4 py-2 text-left text-primary">Content</th>#}
-{#                    <td class="px-4 py-2">{{ quack.content }}</td>#}
-{#                </tr>#}
-{#                <tr class="border-b">#}
-{#                    <th class="px-4 py-2 text-left text-primary">Created_at</th>#}
-{#                    <td class="px-4 py-2">{{ quack.createdAt ? quack.createdAt|date('Y-m-d H:i:s') : '' }}</td>#}
-{#                </tr>#}
-{#                </tbody>#}
-{#            </table>#}
-
-{#            <div class="flex justify-center mt-4 space-x-2">#}
-{#                <a href="{{ path('app_quack_index') }}" class="btn btn-secondary">Back to List</a>#}
-{#                {% if quack.user.id is same as (app.user.id) %}#}
-{#                    <a href="{{ path('app_quack_edit', {'id': quack.id}) }}" class="btn btn-primary">Edit</a>#}
-{#                {% endif %}#}
-{#                {{ include('quack/_delete_form.html.twig') }}#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#{% endblock %}#}
-
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Quack{% endblock %}
@@ -80,48 +5,80 @@
 {% block body %}
     <div class="flex flex-col items-center justify-center min-h-screen bg-primary p-4">
         <div class="w-full max-w-2xl bg-white rounded-lg shadow-md p-6 relative">
-            <!-- Display created_at at the top right -->
+
             <div class="absolute top-2 right-2 text-sm text-gray-500">
                 {{ quack.createdAt ? quack.createdAt|date('Y-m-d H:i') : '' }}
             </div>
 
-            <h1 class="text-xl font-bold mb-4">Quack Details</h1>
+            <h1 class="text-xl font-bold mb-4">{{ quack.user.duckname }}</h1>
 
             <table class="table-auto w-full mb-4">
                 <tbody>
 
                 <tr class="border-b hover:bg-gray-100">
-                    <th class="px-4 py-2 text-left text-primary">Content</th>
+                    <th class="px-4 py-2 text-left text-primary">Quack</th>
                     <td class="px-4 py-2">{{ quack.content }}</td>
                 </tr>
-                <!-- Display tags -->
+
                 <tr class="border-b">
                     <th class="px-4 py-2 text-left text-primary">Tags</th>
-                    <td                 {% if quack.tag %}
-                    <div class=" p-2 rounded-b-md mb-4">
-                        {% for tag in quack.tag|split(',') %}
-                            <span class="bg-secondary text-white rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">💦 {{ tag }}</span>
-                        {% endfor %}
-                    </div>
+                    <td {% if quack.tag %}
+                        <div class=" p-2 rounded-b-md mb-4">
+                            {% for tag in quack.tag|split(',') %}
+                                <span class="bg-secondary text-white rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">💦 {{ tag }}</span>
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 </tr>
                 </tbody>
             </table>
 
-
-            <!-- Display image if available -->
             {% if quack.imageName %}
                 <div class="flex justify-center mb-4 mt-6">
-                    <img src="{{ asset('uploads/quack_images/' ~ quack.imageName) }}" alt="Quack Image" class="max-w-xs rounded-md">
+                    <img src="{{ asset('uploads/quack_images/' ~ quack.imageName) }}" alt="Quack Image"
+                         class="max-w-xs rounded-md">
                 </div>
             {% endif %}
+            <div class="mt-8">
+                <h2 class="text-lg font-bold mb-4">Comments</h2>
+                <div class="space-y-4">
+                    {% for comment in quack.getQuacks %}
+                        <div class="bg-gray-100 p-4 rounded-md relative">
+                            <p class="text-sm text-gray-600">{{ comment.getUser.duckname }} replied:</p>
+                            <p>{{ comment.getContent }}</p>
+
+                            {% if comment.getTag %}
+                            {% for tag in comment.getTag|split(',') %}
+                                <span class="bg-secondary text-white rounded-full px-3 py-1 text-xs font-semibold mr-2 mb-2">💦 {{ tag }}</span>
+                            {% endfor %}
+                            {% endif %}
+                            {% if comment.getImageName %}
+                                <div class="flex justify-center mb-4 mt-6">
+                                    <img src="{{ asset('uploads/quack_images/' ~ comment.getImageName) }}" alt="Quack Image"
+                                         class="max-w-xs rounded-md">
+                                </div>
+                            {% endif %}
+                            {% if comment.getUser.id is same as (app.user.id) %}
+                                <a href="{{ path('app_quack_edit', {'id': comment.getId}) }}" class="btn btn-xs btn-ghost absolute bottom-2 right-2">Edit</a>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <p>No comments yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
 
             <div class="flex justify-center mt-4 space-x-2 mt-6">
                 <a href="{{ path('app_quack_index') }}" class="btn btn-secondary">Back</a>
                 {% if quack.user.id is same as (app.user.id) %}
                     <a href="{{ path('app_quack_edit', {'id': quack.id}) }}" class="btn btn-primary">Edit</a>
                 {% endif %}
+                <a href="{{ path('app_quack_newComment', {'id': quack.id}) }}" class="btn btn-primary">Comment</a>
+                {% if quack.user.id is same as (app.user.id) %}
                 {{ include('quack/_delete_form.html.twig') }}
+                {% endif %}
+
+
             </div>
         </div>
     </div>

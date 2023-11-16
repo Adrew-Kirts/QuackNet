@@ -33,11 +33,11 @@ class ProfileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Check if the 'Change Password' checkbox was checked
-            if ($form->get('change_password')->getData()) {
-                $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('password')->getData()
-                    )
-                );
-            }
+//            if ($form->get('change_password')->getData()) {
+//                $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('password')->getData()
+//                    )
+//                );
+//            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_profile', [], Response::HTTP_SEE_OTHER);

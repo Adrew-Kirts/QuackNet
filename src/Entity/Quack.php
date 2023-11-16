@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\QuackRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,12 @@ class Quack
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $imageName = null;
 
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'quacks')]
+    private ?self $quackComment = null;
+
+    #[ORM\OneToMany(mappedBy: 'quackComment', targetEntity: self::class)]
+    private Collection $quacks;
+
 
     public function getImageName(): ?string
     {
@@ -48,6 +56,7 @@ class Quack
     public function __construct()
     {
         $this->created_at = new \DateTime();
+        $this->quacks = new ArrayCollection();
     }
 
     public function getTag(): ?string
@@ -88,6 +97,7 @@ class Quack
     {
         $this->created_at = $created_at;
 
+
         return $this;
     }
 
@@ -99,6 +109,48 @@ class Quack
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getQuackComment(): ?self
+    {
+        return $this->quackComment;
+    }
+
+    public function setQuackComment(?self $quackComment): static
+    {
+        $this->quackComment = $quackComment;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getQuacks(): Collection
+    {
+        return $this->quacks;
+    }
+
+    public function addQuack(self $quack): static
+    {
+        if (!$this->quacks->contains($quack)) {
+            $this->quacks->add($quack);
+            $quack->setQuackComment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuack(self $quack): static
+    {
+        if ($this->quacks->removeElement($quack)) {
+            // set the owning side to null (unless already changed)
+            if ($quack->getQuackComment() === $this) {
+                $quack->setQuackComment(null);
+            }
+        }
 
         return $this;
     }

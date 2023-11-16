@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Quack;
+use App\Form\CommentType;
 use App\Form\QuackType;
 use App\Repository\QuackRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,8 +32,10 @@ class QuackController extends AbstractController
     #[Route('/index', name: 'app_quack_index', methods: ['GET'])]
     public function index(QuackRepository $quackRepository): Response
     {
+        $quacks = $quackRepository->findOriginalQuacks();
+
         return $this->render('quack/index.html.twig', [
-            'quacks' => $quackRepository->findByOrdered(),
+            'quacks' => $quacks,
         ]);
     }
 
@@ -104,6 +107,7 @@ class QuackController extends AbstractController
     public function edit(Request $request, Quack $quack, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
+        $id = $quack->getId();
         if ($this->getUser() === $quack->getUser()) {
             $form = $this->createForm(QuackType::class, $quack);
             $form->handleRequest($request);
@@ -134,7 +138,10 @@ class QuackController extends AbstractController
 
                 $entityManager->flush();
 
-                return $this->redirectToRoute('app_quack_index', [], Response::HTTP_SEE_OTHER);
+//                return $this->redirectToRoute('app_quack_index', [], Response::HTTP_SEE_OTHER);
+
+                return $this->redirectToRoute('app_quack_show', ['id' => $id], Response::HTTP_SEE_OTHER);
+
             }
 
             return $this->render('quack/edit.html.twig', [
@@ -157,4 +164,53 @@ class QuackController extends AbstractController
 
         return $this->redirectToRoute('app_quack_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/new_comment/{id}', name: 'app_quack_newComment', methods: ['GET', 'POST'])]
+    public function addComment(Request $request, EntityManagerInterface $entityManager, Quack $originalQuack): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $comment = new Quack();
+//        $comment->setContent("Nice");
+        $comment->setUser($this->getUser());
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('imageFile')->getData();
+
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $this->slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('quack_images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                $comment->setImageName($newFilename);
+            }
+
+            $tags = $form->get('tag')->getData();
+            $comment->setTag($tags);
+
+        $comment->setQuackComment($originalQuack);
+
+        $entityManager->persist($comment);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_quack_index', [], Response::HTTP_SEE_OTHER);
+    }
+        return $this->render('quack/newComment.html.twig', [
+            'quack' => $comment,
+            'form' => $form,
+        ]);
 }
+}
+

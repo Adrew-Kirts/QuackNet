@@ -44,6 +44,15 @@ class QuackRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findOriginalQuacks(): array
+    {
+        return $this->createQueryBuilder('q')
+            ->orderBy('q.id', 'DESC')
+            ->where('q.quackComment IS NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    public function findOneBySomeField($value): ?Quack
 //    {
 //        return $this->createQueryBuilder('q')
