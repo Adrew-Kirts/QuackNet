@@ -165,7 +165,7 @@ class QuackController extends AbstractController
         return $this->redirectToRoute('app_quack_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/new_comment/{id}', name: 'app_quack_newComment', methods: ['GET', 'POST'])]
+    #[Route('/new_comment/{id}', name: 'app_quack_newCommentModal', methods: ['GET', 'POST'])]
     public function addComment(Request $request, EntityManagerInterface $entityManager, Quack $originalQuack): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -192,6 +192,8 @@ class QuackController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
+                    $this->addFlash('danger', 'File upload error: ' . $e->getMessage());
+                    return $this->redirectToRoute('app_quack_newCommentModal', ['id' => $originalQuack->getId()]);
                 }
 
                 $comment->setImageName($newFilename);
@@ -207,10 +209,11 @@ class QuackController extends AbstractController
 
         return $this->redirectToRoute('app_quack_index', [], Response::HTTP_SEE_OTHER);
     }
-        return $this->render('quack/newComment.html.twig', [
+        return $this->render('quack/newCommentModal.html.twig', [
             'quack' => $comment,
             'form' => $form,
         ]);
+
 }
 }
 

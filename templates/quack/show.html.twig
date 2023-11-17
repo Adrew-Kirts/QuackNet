@@ -44,7 +44,7 @@
                 <div class="space-y-4">
                     {% for comment in quack.getQuacks %}
                         <div class="bg-gray-100 p-4 rounded-md relative">
-                            <p class="text-sm text-gray-600">{{ comment.getUser.duckname }} replied:</p>
+                            <p class="text-sm text-gray-600">{{ comment.getUser.duckname }} </p>
                             <p>{{ comment.getContent }}</p>
 
                             {% if comment.getTag %}
@@ -72,13 +72,59 @@
                 <a href="{{ path('app_quack_index') }}" class="btn btn-secondary">Back</a>
                 {% if quack.user.id is same as (app.user.id) %}
                     <a href="{{ path('app_quack_edit', {'id': quack.id}) }}" class="btn btn-primary">Edit</a>
-                {% endif %}
-                <a href="{{ path('app_quack_newComment', {'id': quack.id}) }}" class="btn btn-primary">Comment</a>
-                {% if quack.user.id is same as (app.user.id) %}
+{#                {% endif %}#}
+{#                <a href="{{ path('app_quack_newComment', {'id': quack.id}) }}" class="btn btn-primary">Comment</a>#}
+{#                {% if quack.user.id is same as (app.user.id) %}#}
                 {{ include('quack/_delete_form.html.twig') }}
                 {% endif %}
+            </div>
+
+            <!-- Comment Modal -->
+            <div id="commentModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+
+                <div class="relative top-20 mx-auto border w-2/5 shadow-lg rounded-md bg-primary">
+
+                    <button id="closeModal" class="absolute top-0 right-0 mt-2 mr-2 text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+
+                    <div class="mt-3 text-center">
+                        <div class="mt-2 px-7 py-3">
+                            {{ render(controller('App\\Controller\\QuackController::addComment', {'id': quack.id})) }}
+                        </div>
+                        <div class="items-center px-4 py-3">
+{#                            <button id="closeModal" class="btn btn-primary">Close</button>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" id="commentButton" class="btn btn-primary">Comment</a>
+
+            <script>
+                document.querySelector('#commentButton').addEventListener('click', function() {
+                    document.querySelector('#commentModal').classList.remove('hidden');
+                });
+                document.querySelector('#closeModal').addEventListener('click', function() {
+                    document.querySelector('#commentModal').classList.add('hidden');
+                });
+            </script>
 
 
+
+
+            <div class="fixed top-4 right-6 z-50 flex items-center space-x-4">
+                {% if app.user %}
+                    <a href="{{ path('app_quack_new') }}" class="btn btn-accent">New Quack</a>
+                    <a href="{{ path('app_profile') }}" class="btn btn-secondary">Profile</a>
+                {% endif %}
+
+                {% if not app.user %}
+                    <a href="{{ path('app_login') }}" class="btn btn-secondary">Login</a>
+                    <a href="{{ path('app_register') }}" class="btn btn-base">Register</a>
+                {% endif %}
             </div>
         </div>
     </div>

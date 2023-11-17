@@ -1,17 +1,33 @@
-
-
-
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Edit Quack{% endblock %}
 
 {% block body %}
-    <h1>Edit Quack</h1>
+    <div class="flex flex-col items-center justify-center min-h-screen bg-primary p-4">
+        <div class="w-full max-w-2xl bg-white rounded-lg shadow-lg p-6">
+            <h1 class="text-2xl font-bold mb-4 text-center">Edit Quack</h1>
 
-    {{ include('quack/_form.html.twig', {'button_label': 'Update'}) }}
+            {{ include('quack/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_quack_index') }}">back to list</a>
+            <div class="flex justify-between mt-6">
+                <a href="{{ path('app_quack_index') }}" class="btn btn-secondary">Back to Quacks</a>
+                {{ include('quack/_delete_form.html.twig', {'class': 'btn btn-danger'}) }}
+            </div>
+        </div>
+    </div>
 
-    {{ include('quack/_delete_form.html.twig') }}
+    <style>
+        input[type='text'], textarea {
+            border: 2px solid #4A5568;
+            background-color: #EDF2F7;
+            padding: 8px 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type='text']:focus, textarea:focus {
+            outline: none;
+            border-color: #2B6CB0;
+            background-color: #E2E8F0;
+        }
+    </style>
 {% endblock %}

@@ -36,7 +36,20 @@
     {% block javascripts %}
     {% endblock %}
 </head>
-<body class="bg-secondary">
-{% block body %}{% endblock %}
+<body class="">
+{% block body %}
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+{% endblock %}
 </body>
 </html>

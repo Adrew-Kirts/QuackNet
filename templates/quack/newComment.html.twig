@@ -1,28 +1,9 @@
 
-{#{% extends 'base.html.twig' %}#}
-
-{#{% block title %}New Quack{% endblock %}#}
-
-{#{% block body %}#}
-{#    <div class="flex flex-col items-center justify-center min-h-screen bg-neutral p-4 btn-group-horizontal">#}
-{#        <div class="w-full max-w-2xl bg-primary rounded-lg shadow-md p-6">#}
-{#            <h1 class="text-xl font-bold mb-4">Create new Quack</h1>#}
-
-{#            {{ form_start(form, {'attr': {'class': 'space-y-3'}}) }}#}
-{#            {{ form_widget(form) }}#}
-{#            <button class="btn btn-accent">{{ button_label|default('Quack it!') }}</button>#}
-{#            {{ form_end(form) }}#}
-{#            <a href="{{ path('app_quack_index') }}" class="btn btn-secondary mt-4">back to Quack Feed</a>#}
-{#        </div>#}
-{#    </div>#}
-{#{% endblock %}#}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}New Comment{% endblock %}
 
 {% block body %}
-    {#<div style="background-image: url('https://i.pinimg.com/550x/70/e4/9a/70e49afe27f492f5ca62ca92768f08c7.jpg'); background-size: cover; background-position: center; min-height: 100vh;">#}
     <div class="flex flex-col items-center justify-center min-h-screen bg-neutral p-4">
         <div style="background-image: url('https://i.pinimg.com/550x/70/e4/9a/70e49afe27f492f5ca62ca92768f08c7.jpg'); background-size: cover; background-position: center; " class="w-full max-w-2xl bg-primary rounded-lg shadow-md p-6">
             <h1 class="text-xl font-bold mb-4">Create new Comment</h1>
@@ -43,7 +24,6 @@
                 {{ form_label(form.imageFile) }}
                 {{ form_widget(form.imageFile, {'attr': {'class': 'w-full'}}) }}
             </div>
-
 
             <div class="flex justify-between mt-4">
                 <button type="submit" class="btn btn-active btn-secondary">{{ button_label|default('Quack comment !') }}</button>
